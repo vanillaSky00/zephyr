@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from app.domain.media.models import Media
 
 
-def create_video_media(
+def create_voice_media(
     db: Session, 
     *, 
     entry_id: int,
@@ -32,7 +32,7 @@ def set_media_status(
 ) -> None:
     db.query(Media) \
       .filter(Media.id == media_id) \
-      .update({"status", status, "error", error})
+      .update({"status": status, "error": error})
     db.commit()
 
 def set_transcript(
