@@ -11,7 +11,7 @@ def create_entry(
     user_id: int,
     entry_text: str | None
 ) -> Entry:
-    e = Entry(user_id, entry_text=entry_text)
+    e = Entry(user_id=user_id, entry_text=entry_text)
     db.add(e)
     db.commit()
     db.refresh(e)
@@ -36,7 +36,7 @@ def set_entry_status(
 ) -> None:
     db.query(Entry) \
       .filter(Entry.id == entry_id) \
-      .update({"status", status, "error", error})
+      .update({"status": status, "error": error})
     db.commit()
 
 def update_entry_analysis(
@@ -49,7 +49,7 @@ def update_entry_analysis(
     evidence: list[str],
     status: str
 ) -> None:
-    db.query(Entry.id == entry_id) \
+    db.query(Entry).filter(Entry.id == entry_id) \
       .update(
           {
             "valence": valence,
